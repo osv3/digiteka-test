@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "scripts": {
+   "dev": "nodemon --ignore public/geoip --ignore public/configs --ignore tmp server.js",
+    "start": "node server.js",
+    "update:geoip": "node scripts/updateGeoip.js",
+    "test:geoip": "node --test tests/geoip.integration.test.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "node-cron": "^4.5.0",
+    "tar": "^7.5.16"
+  }
+}
