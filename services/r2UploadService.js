@@ -173,7 +173,6 @@ export async function uploadGeoipFilesToR2() {
 r2Countries[country] = {
   ...item,
   url: publicUrlForKey(item.file),
-  apiDownloadUrl: `/api/geoip/${country}/download`,
 };
   }
 
@@ -197,7 +196,6 @@ r2Downloads[country] = {
   bytes: item.bytes,
   sha256: item.sha256,
   url: item.url,
-  apiDownloadUrl: item.apiDownloadUrl,
 };
   }
 

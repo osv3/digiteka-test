@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "nodemon --ignore public/geoip --ignore public/configs --ignore tmp server.js",
     "start": "node server.js",
+    "worker": "node worker.js",
     "update:geoip": "node scripts/updateGeoip.js",
     "test:geoip": "node --test tests/geoip.integration.test.js",
     "upload:r2": "node scripts/uploadGeoipToR2.js",

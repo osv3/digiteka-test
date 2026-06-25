@@ -10,7 +10,6 @@ const STATE_DIR = path.join(ROOT, "tmp", "geoip-state");
 
 const MANIFEST_PATH = path.join(BUILD_DIR, "manifest.json");
 const STATUS_PATH = path.join(STATE_DIR, "update-status.json");
-const CURRENT_MANIFEST_PATH = path.join(STATE_DIR, "current-manifest.json");
 
 let activeUpdatePromise = null;
 
@@ -152,11 +151,13 @@ async function runGeoipUpdateInternal({ triggeredBy = "manual" } = {}) {
           timezone: process.env.GEOIP_TZ || "UTC",
         },
       },
-      client: {
-        manifestUrl: "/geoip/manifest.json",
-        downloadBaseUrl: "/geoip",
-        downloads: createClientDownloads(manifest),
-      },
+client: {
+  manifestUrl: process.env.R2_PUBLIC_BASE_URL
+    ? `${process.env.R2_PUBLIC_BASE_URL.replace(/\/$/, "")}/manifest.json`
+    : "manifest.json",
+  downloadBaseUrl: process.env.R2_PUBLIC_BASE_URL?.replace(/\/$/, "") || "",
+  downloads: createClientDownloads(manifest),
+},
     };
 
     await writeJson(MANIFEST_PATH, enrichedManifest);
@@ -169,7 +170,6 @@ async function runGeoipUpdateInternal({ triggeredBy = "manual" } = {}) {
 
     const finalManifest = r2Upload ? r2Upload.manifest : enrichedManifest;
 
-    await writeJson(CURRENT_MANIFEST_PATH, finalManifest);
 
     const status = {
       status: "success",
